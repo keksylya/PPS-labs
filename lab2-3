@@ -1,0 +1,38 @@
+import by.vsu.mf.ai.ssd.strings.*;
+
+class BraceReverseIndexInserter {
+    private StringBuilder builder;
+
+    public BraceReverseIndexInserter(StringBuilder builder) {
+        this.builder = builder;
+    }
+
+    public String getStringWithInsertedIndexes() {
+        int fromIndex = builder.length() - 1;
+        int count = 1;
+        int index = builder.lastIndexOf("{}", fromIndex);
+
+        while (index != -1) {
+            builder.insert(index + 1, count);
+            fromIndex = index - 1;
+            count++;
+            index = builder.lastIndexOf("{}", fromIndex);
+        }
+
+        return builder.toString();
+    }
+}
+
+
+class BraceReverseIndexInserterJob implements Job {
+    @Override
+    public void perform(StringBuilder arg0) {
+        new BraceReverseIndexInserter(arg0).getStringWithInsertedIndexes();
+    }
+}
+
+public class App {
+    public static void main(String[] args) throws Exception {
+        Manager.createWindow(new BraceReverseIndexInserterJob());
+    }
+}
