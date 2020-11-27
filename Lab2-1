@@ -1,0 +1,135 @@
+import java.util.Arrays;
+
+import java.util.Comparator;
+
+
+
+class PartStringComparator implements Comparator<String> {
+
+    private String s1, s2;
+
+
+
+    public PartStringComparator(String s1, String s2) {
+
+        this.s1 = s1;
+
+        this.s2 = s2;
+
+    }
+
+
+
+    @Override
+
+    public int compare(String o1, String o2) {
+
+        o1 = getPart(o1);
+
+        o2 = getPart(o2);
+
+        return o1.compareToIgnoreCase(o2);
+
+    }
+
+
+
+    private String getPart(String string) {
+
+        int begin = string.indexOf(s1) + s1.length();
+
+        int end = string.lastIndexOf(s2);
+
+
+
+        return string.substring(begin, end);
+
+    }
+
+}
+
+
+
+class LowerCaseCharsCountStringComparator implements Comparator<String> {
+
+    @Override
+
+    public int compare(String o1, String o2) {
+
+        long cnt1 = getNumberOfLowerCaseChars(o1);
+
+        long cnt2 = getNumberOfLowerCaseChars(o2);
+
+        return Long.compare(cnt1, cnt2);
+
+    }
+
+
+
+    private long getNumberOfLowerCaseChars(String string) {
+
+        return string.chars().mapToObj((c) -> (char) c).filter((c) -> Character.isLowerCase(c)).count();
+
+    }
+
+}
+
+
+
+public class App {
+
+    public static void main(String[] args) throws Exception {
+
+        System.out.println("Input n:");
+
+        int n = Integer.parseInt(System.console().readLine());
+
+
+
+        System.out.println("Input strings:");
+
+        String[] values = new String[n];
+
+        for (int i = 0; i < n; i++) {
+
+            values[i] = System.console().readLine();
+
+        }
+
+
+
+        System.out.println("Input s1, s2:");
+
+        String s1 = System.console().readLine();
+
+        String s2 = System.console().readLine();
+
+
+
+
+
+        Arrays.sort(values, new PartStringComparator(s1, s2));
+
+
+
+        for (String string : values) {
+
+            System.out.println(string);
+
+        }
+
+
+
+        Arrays.sort(values, new LowerCaseCharsCountStringComparator());
+
+
+
+        for (String string : values) {
+
+            System.out.println(string);
+
+        }
+
+    }
+
+}
