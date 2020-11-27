@@ -1,0 +1,61 @@
+class BraceReverseIndexInserter {
+
+    private String string;
+
+
+
+    public BraceReverseIndexInserter(String string) {
+
+        this.string = string;
+
+    }
+
+
+
+    public String getStringWithInsertedIndexes() {
+
+        var builder = new StringBuilder(string);
+
+        int fromIndex = string.length() - 1;
+
+        int count = 1;
+
+        int index = string.lastIndexOf("{}", fromIndex);
+
+
+
+        while (index != -1) {
+
+            builder.insert(index + 1, count);
+
+            fromIndex = index - 1;
+
+            count++;
+
+            index = string.lastIndexOf("{}", fromIndex);
+
+        }
+
+
+
+        return builder.toString();
+
+    }
+
+}
+
+
+
+public class App {
+
+    public static void main(String[] args) throws Exception {
+
+        System.out.println("Input string:");
+
+        String value = System.console().readLine();
+
+
+
+        System.out.println(new BraceReverseIndexInserter(value).getStringWithInsertedIndexes());
+
+    }
